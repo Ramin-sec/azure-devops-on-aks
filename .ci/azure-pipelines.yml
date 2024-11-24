@@ -1,6 +1,6 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)
 
-pool: DevOpsOnAks
+pool: coolpool
 
 trigger:
   batch: true
@@ -22,7 +22,7 @@ stages:
 
           - script: |
               set -euo pipefail
-              az aks get-credentials --resource-group devops-runner-rg --name aks-devops-runner --overwrite-existing
+              az aks get-credentials --resource-group automation-rg --name orkideaks --overwrite-existing
               kubelogin convert-kubeconfig -l workloadidentity
               sed 's|IMAGE|ConRepo.azurecr.io/devops-demo|g; s/TAG/$(Build.SourceVersion)/g' $(Agent.BuildDirectory)/s/app.yaml | kubectl apply -f -
             displayName: Get AKS credentials and deploy app
